@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 using ToDoList.Model;
+using ToDoList.Repo;
 
 namespace ToDoList.Controllers
 {
@@ -15,45 +16,41 @@ namespace ToDoList.Controllers
     public class TodoesController : ControllerBase
     {
         private static List<Todo> _todos = new List<Todo>();
+
+        private readonly ITodoRepository _todoRepository;
+
+        public TodoesController(ITodoRepository todoRepository)
+        {
+            _todoRepository = todoRepository;
+        }
         // GET: api/Todoes
         [HttpGet]
         public ActionResult<IEnumerable<Todo>> GetTodos()
         {
-            return _todos;
+            var todos = _todoRepository.GetTodos();
+            return Ok(todos);
         }
+
         // POST: api/Todoes
         [HttpPost]
         public ActionResult<Todo> CreateTodoItem(Todo todo)
         {
-           
-            int newId = _todos.Count + 1;
-            todo.Id = newId;
-
-            
-            _todos.Add(todo);
-
-            // Return the created todo item with HTTP 201 Created status
-            return CreatedAtAction(nameof(GetTodos), new { id = todo.Id }, todo);
+            var createdTodo = _todoRepository.CreateTodoItem(todo);
+            return CreatedAtAction(nameof(GetTodos), new { id = createdTodo.Id }, createdTodo);
         }
+
         // PUT: api/Todoes/{Id}
         [HttpPut("{id}")]
         public ActionResult<Todo> UpdateTodoItem(int id, Todo updatedTodo)
         {
-            
-            Todo existingTodo = _todos.FirstOrDefault(t => t.Id == id);
+            var existingTodo = _todoRepository.UpdateTodoItem(id, updatedTodo);
             if (existingTodo == null)
             {
                 return NotFound();
             }
-
-            // Update the properties of the existing todo item
-            existingTodo.Title = updatedTodo.Title;
-            existingTodo.Description = updatedTodo.Description;
-            existingTodo.IsCompleted = updatedTodo.IsCompleted;
-
-            // Return the updated todo item
             return existingTodo;
         }
+
 
 
 
