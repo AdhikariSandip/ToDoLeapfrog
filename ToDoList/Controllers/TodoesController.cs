@@ -15,7 +15,7 @@ namespace ToDoList.Controllers
     [ApiController]
     public class TodoesController : ControllerBase
     {
-        private static List<Todo> _todos = new List<Todo>();
+        
 
         private readonly ITodoRepository _todoRepository;
 
