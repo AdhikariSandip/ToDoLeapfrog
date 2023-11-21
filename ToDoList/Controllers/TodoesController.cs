@@ -1,61 +1,85 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+
 
 using ToDoList.Model;
-using ToDoList.Repo;
+
 
 namespace ToDoList.Controllers
 {
-    [Route("api/[controller]")]
+    // TodoController.cs
+    using Microsoft.AspNetCore.Mvc;
+    using ToDoList.Services;
+
     [ApiController]
-    public class TodoesController : ControllerBase
+    [Route("api/[controller]")]
+    public class TodoController : ControllerBase
     {
-        
+        private readonly TodoService _todoService;
 
-        private readonly ITodoRepository _todoRepository;
-
-        public TodoesController(ITodoRepository todoRepository)
+        public TodoController(TodoService todoService)
         {
-            _todoRepository = todoRepository;
+            _todoService = todoService;
         }
-        // GET: api/Todoes
+
         [HttpGet]
-        public ActionResult<IEnumerable<Todo>> GetTodos()
+        public IActionResult GetAll()
         {
-            var todos = _todoRepository.GetTodos();
+            var todos = _todoService.GetAll();
             return Ok(todos);
         }
 
-        // POST: api/Todoes
-        [HttpPost]
-        public ActionResult<Todo> CreateTodoItem(Todo todo)
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
         {
-            var createdTodo = _todoRepository.CreateTodoItem(todo);
-            return CreatedAtAction(nameof(GetTodos), new { id = createdTodo.Id }, createdTodo);
+            var todo = _todoService.GetById(id);
+            if (todo == null)
+            {
+                return NotFound();
+            }
+            return Ok(todo);
         }
 
-        // PUT: api/Todoes/{Id}
-        [HttpPut("{id}")]
-        public ActionResult<Todo> UpdateTodoItem(int id, Todo updatedTodo)
+        [HttpPost]
+        public IActionResult Add([FromBody] Todo todo)
         {
-            var existingTodo = _todoRepository.UpdateTodoItem(id, updatedTodo);
+            _todoService.Add(todo);
+            return CreatedAtAction(nameof(GetById), new { id = todo.Id }, todo);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, [FromBody] Todo todo)
+        {
+            var existingTodo = _todoService.GetById(id);
             if (existingTodo == null)
             {
                 return NotFound();
             }
-            return existingTodo;
+
+            existingTodo.Title = todo.Title;
+            existingTodo.IsCompleted = todo.IsCompleted;
+
+            _todoService.Update(existingTodo);
+
+            return NoContent();
         }
 
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var existingTodo = _todoService.GetById(id);
+            if (existingTodo == null)
+            {
+                return NotFound();
+            }
 
+            _todoService.Delete(id);
 
-
-
-
-
+            return NoContent();
+        }
     }
+
+
+
+
 }
+

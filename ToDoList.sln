@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoList", "ToDoList\ToDoList.csproj", "{E5B3D261-BE11-47FC-B307-F6C21266A054}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoList", "ToDoList\ToDoList.csproj", "{E5B3D261-BE11-47FC-B307-F6C21266A054}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService", "AuthService\AuthService.csproj", "{6E5E5975-3E87-426C-9388-17D263980ECB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway", "ApiGateway\ApiGateway.csproj", "{57D7BB79-FC18-4A00-957A-D2C822D8EB3C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{E5B3D261-BE11-47FC-B307-F6C21266A054}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5B3D261-BE11-47FC-B307-F6C21266A054}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5B3D261-BE11-47FC-B307-F6C21266A054}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E5E5975-3E87-426C-9388-17D263980ECB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E5E5975-3E87-426C-9388-17D263980ECB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E5E5975-3E87-426C-9388-17D263980ECB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E5E5975-3E87-426C-9388-17D263980ECB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57D7BB79-FC18-4A00-957A-D2C822D8EB3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57D7BB79-FC18-4A00-957A-D2C822D8EB3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57D7BB79-FC18-4A00-957A-D2C822D8EB3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57D7BB79-FC18-4A00-957A-D2C822D8EB3C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
